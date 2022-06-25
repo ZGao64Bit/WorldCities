@@ -1,5 +1,6 @@
 package com.zack.staybooking.controllers;
 
+import com.zack.staybooking.exception.GCSUploadException;
 import com.zack.staybooking.exception.StayNotExistException;
 import com.zack.staybooking.exception.UserAlreadyExistException;
 import com.zack.staybooking.exception.UserNotExistException;
@@ -26,5 +27,10 @@ public class CustomExceptionHandler {
     @ExceptionHandler(StayNotExistException.class)
     public final ResponseEntity<String> handleStayNotExistExceptions(Exception ex, WebRequest request) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(GCSUploadException.class)
+    public final ResponseEntity<String> handleGCSUploadExceptions(Exception ex, WebRequest request) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
