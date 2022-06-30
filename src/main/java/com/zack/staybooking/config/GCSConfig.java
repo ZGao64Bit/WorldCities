@@ -14,7 +14,7 @@ public class GCSConfig {
     @Bean
     public Storage storage() throws IOException {
         Credentials credentials = ServiceAccountCredentials.fromStream(
-                getClass().getClassLoader().getResourceAsStream("creadentials.json")
+                getClass().getClassLoader().getResourceAsStream("credentials.json")
         );
         return
                 StorageOptions.newBuilder().setCredentials(credentials).build().getService();

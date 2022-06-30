@@ -29,7 +29,7 @@ public class Stay implements Serializable {
     private User host;
 
     @OneToMany(mappedBy = "stay", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<StayImage> stayImages;
+    private List<StayImage> images;
 
     @JsonIgnore
     @OneToMany(mappedBy = "stay", cascade = CascadeType.ALL)
@@ -43,7 +43,7 @@ public class Stay implements Serializable {
         this.guestNumber = builder.guestNumber;
         this.host = builder.host;
         this.reservedDates = builder.reservedDates;
-        this.stayImages = builder.stayImages;
+        this.images = builder.stayImages;
     }
 
     public Stay() {
@@ -75,12 +75,12 @@ public class Stay implements Serializable {
         return host;
     }
 
-    public List<StayImage> getStayImages() {
-        return stayImages;
+    public List<StayImage> getImages() {
+        return images;
     }
 
-    public void setImages(List<StayImage> stayImages) {
-        this.stayImages = stayImages;
+    public void setImages(List<StayImage> images) {
+        this.images = images;
     }
 
     public List<StayReservedDate> getReservedDates() {
@@ -156,6 +156,9 @@ public class Stay implements Serializable {
             return this;
         }
 
+        public List<StayImage> getStayImages() {
+            return stayImages;
+        }
 
         public Stay build() {
             return new Stay(this);

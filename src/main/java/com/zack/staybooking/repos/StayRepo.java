@@ -11,4 +11,6 @@ import java.util.List;
 public interface StayRepo extends JpaRepository<Stay, Long> {
     List<Stay> findByHost(User user);
     Stay findByIdAndHost(Long id, User host);
+
+    List<Stay> findByIdInAndGuestNumberGreaterThanEqual(List<Long> ids, int guestNumber);
 }
