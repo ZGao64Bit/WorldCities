@@ -7,8 +7,19 @@ import java.util.Objects;
 
 @Embeddable
 public class StayReservedDateKey implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private Long stay_id;
     private LocalDate date;
+
+    public StayReservedDateKey() {
+
+    }
+
+    public StayReservedDateKey(Long stay_id, LocalDate date) {
+        this.stay_id = stay_id;
+        this.date = date;
+    }
 
     public Long getStay_id() {
         return stay_id;

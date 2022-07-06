@@ -1,9 +1,6 @@
 package com.zack.staybooking.controllers;
 
-import com.zack.staybooking.exception.GCSUploadException;
-import com.zack.staybooking.exception.StayNotExistException;
-import com.zack.staybooking.exception.UserAlreadyExistException;
-import com.zack.staybooking.exception.UserNotExistException;
+import com.zack.staybooking.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -32,5 +29,20 @@ public class CustomExceptionHandler {
     @ExceptionHandler(GCSUploadException.class)
     public final ResponseEntity<String> handleGCSUploadExceptions(Exception ex, WebRequest request) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(InvalidSearchDateException.class)
+    public final ResponseEntity<String> handleInvalidSearchDateExceptions(Exception ex, WebRequest request) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(GeoCodingException.class)
+    public final ResponseEntity<String> handleGeoCodingExceptions(Exception ex, WebRequest request) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(InvalidStayAddrException.class)
+    public final ResponseEntity<String> handleInvalidStayAddressExceptions(Exception ex, WebRequest request) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }
