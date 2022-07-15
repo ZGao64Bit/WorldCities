@@ -110,7 +110,7 @@ public class Stay implements Serializable {
         @JsonProperty("dates")
         private List<StayReservedDate> reservedDates;
 
-        @JsonProperty("images")
+        @JsonProperty("stayImages")
         private List<StayImage> stayImages;
 
         // ==================== Setters
