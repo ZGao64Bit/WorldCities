@@ -16,6 +16,8 @@ public class Location implements Serializable {
     @Id
     @Field(type = FieldType.Long)
     private Long id;
+
+    @GeoPointField
     private GeoPoint geoPoint;
 
     public Location(Long id, GeoPoint geoPoint) {

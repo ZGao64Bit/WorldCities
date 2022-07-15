@@ -1,7 +1,7 @@
 package com.zack.staybooking.filter;
 
 import com.zack.staybooking.models.Authority;
-import com.zack.staybooking.repos.AuthRepo;
+import com.zack.staybooking.repos.AuthorityRepository;
 import com.zack.staybooking.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,11 +24,11 @@ import java.util.List;
 public class JwtFilter extends OncePerRequestFilter {
     private final String HEADER = "Authorization";
     private final String PREFIX = "Bearer ";
-    private AuthRepo authorityRepository;
+    private AuthorityRepository authorityRepository;
     private JwtUtil jwtUtil;
 
     @Autowired
-    public JwtFilter(AuthRepo authorityRepository, JwtUtil jwtUtil) {
+    public JwtFilter(AuthorityRepository authorityRepository, JwtUtil jwtUtil) {
         this.authorityRepository = authorityRepository;
         this.jwtUtil = jwtUtil;
     }

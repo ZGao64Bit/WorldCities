@@ -11,12 +11,12 @@ import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilde
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomLocRepoImpl implements CustomLocRepo {
+public class CustomLocationRepositoryImpl implements CustomLocationRepository {
     private final String DEFAULT_DISTANCE = "50";
     private ElasticsearchOperations elasticsearchOperations;
 
     @Autowired
-    public CustomLocRepoImpl(ElasticsearchOperations elasticsearchOperations) {
+    public CustomLocationRepositoryImpl(ElasticsearchOperations elasticsearchOperations) {
         this.elasticsearchOperations = elasticsearchOperations;
     }
 

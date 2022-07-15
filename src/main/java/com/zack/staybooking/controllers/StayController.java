@@ -1,7 +1,9 @@
 package com.zack.staybooking.controllers;
 
+import com.zack.staybooking.models.Reservation;
 import com.zack.staybooking.models.Stay;
 import com.zack.staybooking.models.User;
+import com.zack.staybooking.services.ReservationService;
 import com.zack.staybooking.services.StayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +15,12 @@ import java.util.List;
 @RestController
 public class StayController {
     private StayService stayService;
+    private ReservationService reservationService;
 
     @Autowired
-    public StayController(StayService stayService) {
+    public StayController(StayService stayService, ReservationService reservationService) {
         this.stayService = stayService;
+        this.reservationService = reservationService;
     }
 
     @GetMapping(value = "/stays")
@@ -39,6 +43,7 @@ public class StayController {
             Principal principal) {
 
         Stay stay = new Stay.Builder()
+                .setName(name)
                 .setAddress(address)
                 .setDescription(description)
                 .setGuestNumber(guestNumber)
@@ -50,5 +55,10 @@ public class StayController {
     @DeleteMapping("/stays/{stayId}")
     public void deleteStay(@PathVariable Long stayId, Principal principal) {
         stayService.delete(stayId, principal.getName());
+    }
+
+    @GetMapping(value = "/stays/reservations/{stayId}")
+    public List<Reservation> listReservations(@PathVariable Long stayId) {
+        return reservationService.listByStay(stayId);
     }
 }

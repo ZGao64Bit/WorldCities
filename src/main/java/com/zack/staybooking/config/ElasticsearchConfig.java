@@ -10,6 +10,7 @@ import org.springframework.data.elasticsearch.config.AbstractElasticsearchConfig
 
 @Configuration
 public class ElasticsearchConfig extends AbstractElasticsearchConfiguration {
+
     @Value("${elasticsearch.address}")
     private String elasticsearchAddress;
 

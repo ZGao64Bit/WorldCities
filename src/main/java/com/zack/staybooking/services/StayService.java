@@ -1,18 +1,19 @@
 package com.zack.staybooking.services;
 
+import com.zack.staybooking.exception.StayDeleteException;
 import com.zack.staybooking.exception.StayNotExistException;
-import com.zack.staybooking.models.Location;
-import com.zack.staybooking.models.Stay;
-import com.zack.staybooking.models.StayImage;
-import com.zack.staybooking.models.User;
-import com.zack.staybooking.repos.LocRepo;
-import com.zack.staybooking.repos.StayRepo;
+import com.zack.staybooking.models.*;
+import com.zack.staybooking.repos.LocationRepository;
+import com.zack.staybooking.repos.ReservationRepository;
+import com.zack.staybooking.repos.StayRepository;
+import com.zack.staybooking.repos.StayReservationDateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,28 +21,34 @@ import java.util.stream.Collectors;
 
 @Service
 public class StayService {
-    private StayRepo stayRepo;
-    private LocRepo locRepo;
+    private StayRepository stayRepository;
+    private LocationRepository locationRepository;
+    private ReservationRepository reservationRepository;
     private ImageStorageService imageStorageService;
     private GeoCodingService geoCodingService;
+    private StayReservationDateRepository stayReservationDateRepository;
 
     @Autowired
-    public StayService(StayRepo stayRepo,
-                       LocRepo locRepo,
+    public StayService(StayRepository stayRepository,
+                       LocationRepository locationRepository,
+                       ReservationRepository reservationRepository,
                        ImageStorageService imageStorageService,
-                       GeoCodingService geoCodingService) {
-        this.stayRepo = stayRepo;
-        this.locRepo = locRepo;
+                       GeoCodingService geoCodingService,
+                       StayReservationDateRepository stayReservationDateRepository) {
+        this.stayRepository = stayRepository;
+        this.locationRepository = locationRepository;
+        this.reservationRepository = reservationRepository;
         this.imageStorageService = imageStorageService;
         this.geoCodingService = geoCodingService;
+        this.stayReservationDateRepository = stayReservationDateRepository;
     }
 
     public List<Stay> listByUser(String username) {
-        return stayRepo.findByHost(new User.Builder().setUsername(username).build());
+        return stayRepository.findByHost(new User.Builder().setUsername(username).build());
     }
 
     public Stay findByIdAndHost(Long stayId, String username) throws StayNotExistException {
-        Stay stay = stayRepo.findByIdAndHost(stayId, new User.Builder().setUsername(username).build());
+        Stay stay = stayRepository.findByIdAndHost(stayId, new User.Builder().setUsername(username).build());
         if (stay == null) {
             throw new StayNotExistException("Stay doesn't exist");
         }
@@ -59,19 +66,31 @@ public class StayService {
             stayImages.add(new StayImage(mediaLink, stay));
         }
         stay.setImages(stayImages);
-        stayRepo.save(stay);
+        stayRepository.save(stay);
 
         Location location = geoCodingService.getLatLng(stay.getId(), stay.getAddress());
-        locRepo.save(location);
+        locationRepository.save(location);
     }
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public void delete(Long stayId, String username) throws StayNotExistException {
-        Stay stay = stayRepo.findByIdAndHost(stayId, new User.Builder().setUsername(username).build());
+        Stay stay = stayRepository.findByIdAndHost(stayId, new User.Builder().setUsername(username).build());
         if (stay == null) {
             throw new StayNotExistException("Stay doesn't exist");
         }
-        stayRepo.deleteById(stayId);
+
+        List<Reservation> reservations = reservationRepository.findByStayAndCheckoutDateAfter(stay, LocalDate.now());
+        if (reservations != null && reservations.size() > 0) {
+            throw new StayDeleteException("Cannot delete stay with active reservation");
+        }
+
+        List<StayReservedDate> stayReservedDates = stayReservationDateRepository.findByStay(stay);
+
+        for(StayReservedDate date : stayReservedDates) {
+            stayReservationDateRepository.deleteById(date.getId());
+        }
+
+        stayRepository.deleteById(stayId);
     }
 
 }

@@ -4,7 +4,7 @@ import com.zack.staybooking.exception.UserAlreadyExistException;
 import com.zack.staybooking.models.Authority;
 import com.zack.staybooking.models.User;
 import com.zack.staybooking.models.UserRole;
-import com.zack.staybooking.repos.AuthRepo;
+import com.zack.staybooking.repos.AuthorityRepository;
 import com.zack.staybooking.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,15 +14,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
-public class RegService {
+public class RegisterService {
     private UserRepo userRepo;
-    private AuthRepo authRepo;
+    private AuthorityRepository authorityRepository;
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public RegService(UserRepo userRepo, AuthRepo authRepo, PasswordEncoder passwordEncoder) {
+    public RegisterService(UserRepo userRepo, AuthorityRepository authorityRepository, PasswordEncoder passwordEncoder) {
         this.userRepo = userRepo;
-        this.authRepo = authRepo;
+        this.authorityRepository = authorityRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -34,7 +34,7 @@ public class RegService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setEnabled(true);
         userRepo.save(user);
-        authRepo.save(new Authority(user.getUsername(), role.name()));
+        authorityRepository.save(new Authority(user.getUsername(), role.name()));
     }
 
 }

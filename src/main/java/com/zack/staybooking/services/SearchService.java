@@ -1,9 +1,9 @@
 package com.zack.staybooking.services;
 
 import com.zack.staybooking.models.Stay;
-import com.zack.staybooking.repos.LocRepo;
-import com.zack.staybooking.repos.StayRepo;
-import com.zack.staybooking.repos.StayReservationDateRepo;
+import com.zack.staybooking.repos.LocationRepository;
+import com.zack.staybooking.repos.StayRepository;
+import com.zack.staybooking.repos.StayReservationDateRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,12 +14,12 @@ import java.util.Set;
 
 @Service
 public class SearchService {
-    private StayRepo stayRepository;
-    private StayReservationDateRepo stayReservationDateRepository;
-    private LocRepo locationRepository;
+    private StayRepository stayRepository;
+    private StayReservationDateRepository stayReservationDateRepository;
+    private LocationRepository locationRepository;
 
     @Autowired
-    public SearchService(StayRepo stayRepository, StayReservationDateRepo stayReservationDateRepository, LocRepo locationRepository) {
+    public SearchService(StayRepository stayRepository, StayReservationDateRepository stayReservationDateRepository, LocationRepository locationRepository) {
         this.stayRepository = stayRepository;
         this.stayReservationDateRepository = stayReservationDateRepository;
         this.locationRepository = locationRepository;
