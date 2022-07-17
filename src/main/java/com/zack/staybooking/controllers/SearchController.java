@@ -1,6 +1,6 @@
 package com.zack.staybooking.controllers;
 
-import com.zack.staybooking.exception.InvalidSearchDateException;
+import com.zack.staybooking.exceptions.InvalidSearchDateException;
 import com.zack.staybooking.models.Stay;
 import com.zack.staybooking.services.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+
 
 
 @RestController
@@ -37,4 +38,5 @@ public class SearchController {
         }
         return searchService.search(guestNumber, checkinDate, checkoutDate, lat, lon, distance);
     }
+
 }

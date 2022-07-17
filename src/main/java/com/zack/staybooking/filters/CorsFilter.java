@@ -1,4 +1,4 @@
-package com.zack.staybooking.filter;
+package com.zack.staybooking.filters;
 
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;

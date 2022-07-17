@@ -1,6 +1,6 @@
 package com.zack.staybooking.controllers;
 
-import com.zack.staybooking.exception.InvalidReservationDateException;
+import com.zack.staybooking.exceptions.InvalidReservationDateException;
 import com.zack.staybooking.models.Reservation;
 import com.zack.staybooking.models.User;
 import com.zack.staybooking.services.ReservationService;

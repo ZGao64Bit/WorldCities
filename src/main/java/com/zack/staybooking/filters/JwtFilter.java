@@ -1,8 +1,8 @@
-package com.zack.staybooking.filter;
+package com.zack.staybooking.filters;
 
 import com.zack.staybooking.models.Authority;
-import com.zack.staybooking.repos.AuthorityRepository;
-import com.zack.staybooking.util.JwtUtil;
+import com.zack.staybooking.repositories.AuthorityRepository;
+import com.zack.staybooking.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -34,10 +34,7 @@ public class JwtFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(
-            HttpServletRequest httpServletRequest,
-            HttpServletResponse httpServletResponse,
-            FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
         final String authorizationHeader = httpServletRequest.getHeader(HEADER);
 
         String jwt = null;
@@ -45,23 +42,15 @@ public class JwtFilter extends OncePerRequestFilter {
             jwt = authorizationHeader.substring(PREFIX.length());
         }
 
-        if (jwt != null &&
-                jwtUtil.validateToken(jwt) &&
-                SecurityContextHolder.getContext().getAuthentication() == null) {
+        if (jwt != null && jwtUtil.validateToken(jwt) && SecurityContextHolder.getContext().getAuthentication() == null) {
             String username = jwtUtil.extractUsername(jwt);
             Authority authority = authorityRepository.findById(username).orElse(null);
             if (authority != null) {
-                List<GrantedAuthority> grantedAuthorities = Arrays.asList(
-                        new GrantedAuthority[]{new SimpleGrantedAuthority(authority.getAuthority())}
-                );
-                UsernamePasswordAuthenticationToken unpat = new UsernamePasswordAuthenticationToken(
-                                username, null, grantedAuthorities);
-                unpat.setDetails(
-                        new WebAuthenticationDetailsSource().buildDetails(httpServletRequest)
-                );
-                SecurityContextHolder
-                        .getContext()
-                        .setAuthentication(unpat);
+                List<GrantedAuthority> grantedAuthorities = Arrays.asList(new GrantedAuthority[]{new SimpleGrantedAuthority(authority.getAuthority())});
+                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+                        username, null, grantedAuthorities);
+                usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
+                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             }
         }
         filterChain.doFilter(httpServletRequest, httpServletResponse);

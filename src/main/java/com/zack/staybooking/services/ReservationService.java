@@ -1,10 +1,10 @@
 package com.zack.staybooking.services;
 
-import com.zack.staybooking.exception.ReservationCollisionException;
-import com.zack.staybooking.exception.ReservationNotFoundException;
+import com.zack.staybooking.exceptions.ReservationCollisionException;
+import com.zack.staybooking.exceptions.ReservationNotFoundException;
 import com.zack.staybooking.models.*;
-import com.zack.staybooking.repos.ReservationRepository;
-import com.zack.staybooking.repos.StayReservationDateRepository;
+import com.zack.staybooking.repositories.ReservationRepository;
+import com.zack.staybooking.repositories.StayReservationDateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;

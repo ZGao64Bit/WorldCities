@@ -8,6 +8,7 @@ import org.springframework.data.elasticsearch.client.ClientConfiguration;
 import org.springframework.data.elasticsearch.client.RestClients;
 import org.springframework.data.elasticsearch.config.AbstractElasticsearchConfiguration;
 
+
 @Configuration
 public class ElasticsearchConfig extends AbstractElasticsearchConfiguration {
 

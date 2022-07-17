@@ -1,11 +1,11 @@
 package com.zack.staybooking.services;
 
-import com.zack.staybooking.exception.UserAlreadyExistException;
+import com.zack.staybooking.exceptions.UserAlreadyExistException;
 import com.zack.staybooking.models.Authority;
 import com.zack.staybooking.models.User;
 import com.zack.staybooking.models.UserRole;
-import com.zack.staybooking.repos.AuthorityRepository;
-import com.zack.staybooking.repos.UserRepo;
+import com.zack.staybooking.repositories.AuthorityRepository;
+import com.zack.staybooking.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

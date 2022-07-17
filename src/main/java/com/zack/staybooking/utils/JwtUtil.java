@@ -1,4 +1,4 @@
-package com.zack.staybooking.util;
+package com.zack.staybooking.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

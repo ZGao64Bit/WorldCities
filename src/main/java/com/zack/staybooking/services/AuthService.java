@@ -1,10 +1,10 @@
 package com.zack.staybooking.services;
 
-import com.zack.staybooking.exception.UserNotExistException;
+import com.zack.staybooking.exceptions.UserNotExistException;
 import com.zack.staybooking.models.Token;
 import com.zack.staybooking.models.User;
 import com.zack.staybooking.models.UserRole;
-import com.zack.staybooking.util.JwtUtil;
+import com.zack.staybooking.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

@@ -1,4 +1,4 @@
-package com.zack.staybooking.repos;
+package com.zack.staybooking.repositories;
 
 import com.zack.staybooking.models.Authority;
 import org.springframework.data.jpa.repository.JpaRepository;

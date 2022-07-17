@@ -1,6 +1,6 @@
 package com.zack.staybooking.controllers;
 
-import com.zack.staybooking.exception.*;
+import com.zack.staybooking.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

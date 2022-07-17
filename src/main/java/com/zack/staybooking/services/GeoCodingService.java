@@ -1,15 +1,16 @@
 package com.zack.staybooking.services;
 
-import com.zack.staybooking.exception.GeoCodingException;
-import com.zack.staybooking.exception.InvalidStayAddressException;
+import com.zack.staybooking.exceptions.GeoCodingException;
+import com.zack.staybooking.exceptions.InvalidStayAddressException;
 import com.zack.staybooking.models.Location;
-import org.springframework.stereotype.Service;
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.GeocodingResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.geo.GeoPoint;
+import org.springframework.stereotype.Service;
+
 
 import java.io.IOException;
 
@@ -34,4 +35,5 @@ public class GeoCodingService {
             throw new GeoCodingException("Failed to encode stay address");
         }
     }
+
 }

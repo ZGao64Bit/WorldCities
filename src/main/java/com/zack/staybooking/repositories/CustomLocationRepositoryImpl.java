@@ -1,5 +1,6 @@
-package com.zack.staybooking.repos;
+package com.zack.staybooking.repositories;
 import com.zack.staybooking.models.Location;
+
 import org.elasticsearch.common.unit.DistanceUnit;
 import org.elasticsearch.index.query.GeoDistanceQueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;

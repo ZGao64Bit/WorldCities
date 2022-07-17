@@ -1,4 +1,4 @@
-package com.zack.staybooking.exception;
+package com.zack.staybooking.exceptions;
 
 public class GeoCodingException extends RuntimeException {
     public GeoCodingException(String msg) {

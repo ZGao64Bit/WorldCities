@@ -1,9 +1,9 @@
 package com.zack.staybooking.services;
 
 import com.zack.staybooking.models.Stay;
-import com.zack.staybooking.repos.LocationRepository;
-import com.zack.staybooking.repos.StayRepository;
-import com.zack.staybooking.repos.StayReservationDateRepository;
+import com.zack.staybooking.repositories.LocationRepository;
+import com.zack.staybooking.repositories.StayRepository;
+import com.zack.staybooking.repositories.StayReservationDateRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
