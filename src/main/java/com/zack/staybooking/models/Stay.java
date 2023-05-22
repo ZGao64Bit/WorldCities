@@ -9,41 +9,31 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name="stay")
+@Table(name="world_cities")
 @JsonDeserialize(builder = Stay.Builder.class)
 public class Stay implements Serializable {
-    private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name;
-    private String description;
-    private String address;
+    private String city;
+    private String cityAscii;
+    private double lat;
+    private double lng;
+    private String country;
+    private String adminName;
 
-    @JsonProperty("guest_number")
-    private int guestNumber;
-
-    @ManyToOne
-    @JoinColumn(name="user_id")
-    private User host;
-
-    @OneToMany(mappedBy = "stay", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<StayImage> images;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "stay", cascade = CascadeType.ALL)
-    private List<StayReservedDate> reservedDates;
+//    @JsonProperty("guest_number")
+//    private int guestNumber;
 
     private Stay(Builder builder) {
         this.id = builder.id;
-        this.name = builder.name;
-        this.description = builder.description;
-        this.address = builder.address;
-        this.guestNumber = builder.guestNumber;
-        this.host = builder.host;
-        this.reservedDates = builder.reservedDates;
-        this.images = builder.stayImages;
+        this.city = builder.city;
+        this.cityAscii = builder.cityAscii;
+        this.lat = builder.lat;
+        this.lng = builder.lng;
+        this.country = builder.country;
+        this.adminName = builder.adminName;
+
     }
 
     public Stay() {
@@ -55,36 +45,28 @@ public class Stay implements Serializable {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getCity() {
+        return city;
     }
 
-    public String getDescription() {
-        return description;
+    public String getCityAscii() {
+        return cityAscii;
     }
 
-    public String getAddress() {
-        return address;
+    public double getLat() {
+        return lat;
     }
 
-    public int getGuestNumber() {
-        return guestNumber;
+    public double getLng() {
+        return lng;
     }
 
-    public User getHost() {
-        return host;
+    public String getCountry() {
+        return country;
     }
 
-    public List<StayImage> getImages() {
-        return images;
-    }
-
-    public void setImages(List<StayImage> images) {
-        this.images = images;
-    }
-
-    public List<StayReservedDate> getReservedDates() {
-        return reservedDates;
+    public String getAdminName() {
+        return adminName;
     }
 
     // Builder patter - Class
@@ -92,76 +74,28 @@ public class Stay implements Serializable {
         @JsonProperty("id")
         private Long id;
 
-        @JsonProperty("name")
-        private String name;
+        @JsonProperty("city")
+        private String city;
 
-        @JsonProperty("description")
-        private String description;
+        @JsonProperty("city_ascii")
+        private String cityAscii;
 
-        @JsonProperty("address")
-        private String address;
+        @JsonProperty("lat")
+        private double lat;
 
-        @JsonProperty("guest_number")
-        private int guestNumber;
+        @JsonProperty("lng")
+        private double lng;
 
-        @JsonProperty("host")
-        private User host;
+        @JsonProperty("country")
+        private String country;
 
-        @JsonProperty("dates")
-        private List<StayReservedDate> reservedDates;
+        @JsonProperty("admin_name")
+        private String adminName;
 
-        @JsonProperty("stayImages")
-        private List<StayImage> stayImages;
 
         // ==================== Setters
 
         // Setters
-        public Builder setId(Long id) {
-            this.id = id;
-            return this;
-        }
 
-        public Builder setName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Builder setDescription(String description) {
-            this.description = description;
-            return this;
-        }
-
-        public Builder setAddress(String address) {
-            this.address = address;
-            return this;
-        }
-
-        public Builder setGuestNumber(int guestNumber) {
-            this.guestNumber = guestNumber;
-            return this;
-        }
-
-        public Builder setHost(User host) {
-            this.host = host;
-            return this;
-        }
-
-        public Builder setReservedDates(List<StayReservedDate> reservedDates) {
-            this.reservedDates = reservedDates;
-            return this;
-        }
-
-        public Builder setStayImages(List<StayImage> stayImages) {
-            this.stayImages = stayImages;
-            return this;
-        }
-
-        public List<StayImage> getStayImages() {
-            return stayImages;
-        }
-
-        public Stay build() {
-            return new Stay(this);
-        }
     }
 }
